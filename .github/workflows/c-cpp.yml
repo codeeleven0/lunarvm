@@ -16,7 +16,7 @@ jobs:
     - name: make
       run: make
     - name: version
-      run: echo "::set-output name=version::v1.0a"
+      run: echo "name=version::v1.0a" >> $GITHUB_OUTPUT
       id: version
     - name: release
       uses: actions/create-release@v1
