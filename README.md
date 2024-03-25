@@ -1,25 +1,25 @@
 # lunarvm
 A simple emulated CPU.<br>
-LunarVM uses an assembly-like syntax.
-If you want to build a compiler you need to follow this simple steps:
-    * Create code (Make sure it's compilable with the `-static` flag, `staticx` is not allowed.)
-    * Test code (I don't want to hassle with segfaults.)
-    * Run through `clang-format` (`main.c -> fmain.c`, see the difference.)
-    * Open an issue with the code
-    * Wait... :)
-If you want to extend the assembler you need to follow this simple steps:
-    * Create code
-    * Test code
-    * Make sure it also works with LunarVM Assembly.
-    * Run through `clang-format` (`main.c -> fmain.c`, see the difference.)
-    * Open an issue with the code
-    * Wait... :)
-If you want to create a release for Windows you need to follow this simple steps:
-    * Clone repo
-    * Enable GitHub Actions in your repo
-    * Create the build'n'release Action (All build numbers must be timestamped!)
-    * Open an issue with the Action `.yml` file
-    * Wait... :)
+LunarVM uses an assembly-like syntax.<br>
+If you want to build a compiler you need to follow this simple steps:<br>
+    * Create code (Make sure it's compilable with the `-static` flag, `staticx` is not allowed.)<br>
+    * Test code (I don't want to hassle with segfaults.)<br>
+    * Run through `clang-format` (`main.c -> fmain.c`, see the difference.)<br>
+    * Open an issue with the code<br>
+    * Wait... :)<br>
+If you want to extend the assembler you need to follow this simple steps:<br>
+    * Create code<br>
+    * Test code<br>
+    * Make sure it also works with LunarVM Assembly.<br>
+    * Run through `clang-format` (`main.c -> fmain.c`, see the difference.)<br>
+    * Open an issue with the code<br>
+    * Wait... :)<br>
+If you want to create a release for Windows you need to follow this simple steps:<br>
+    * Clone repo<br>
+    * Enable GitHub Actions in your repo<br>
+    * Create the build'n'release Action (All build numbers must be timestamped!)<br>
+    * Open an issue with the Action `.yml` file<br>
+    * Wait... :)<br>
 
 # Arguments
 `FILENAME` Must be argv[1]<br>
