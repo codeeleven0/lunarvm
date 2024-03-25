@@ -16,7 +16,7 @@ jobs:
 
       - name: Install Clang
         run: |
-          choco install llvm --version=13.0.0
+          choco install llvm --version=13.0.0 --force
 
       - name: Add LLVM bin directory to PATH
         run: |
@@ -25,11 +25,11 @@ jobs:
 
       - name: Install Make
         run: |
-          choco install make
+          choco install make --force
 
       - name: Install Clang-Format
         run: |
-          choco install clang-format --version=13.0.0
+          choco install clang-format --version=13.0.0 --force
 
       - name: Verify installations
         run: |
