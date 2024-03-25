@@ -17,6 +17,7 @@ jobs:
       - name: Build project
         run: |
           make
+          copy lunarbox.exe D:\a\lunarvm\lunarvm\lunarbox.exe
           pwd
           dir
       - name: List Files
