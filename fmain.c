@@ -66,9 +66,9 @@ int main(int argc, char **argv) {
     return 1;
   }
   if (!(argc > 2 && (strcmp(argv[2], "-v") == 0))) {
-    printf("LunarBox v1.0 - Starting emulation.\n");
+    printf("LunarVM v1.0 - Starting emulation.\n");
   } else {
-    printf("LunarBox v1.0 - Starting emulation.");
+    printf("LunarVM v1.0 - Starting emulation.");
   }
   char y[512];
   readLine(fp, y);
