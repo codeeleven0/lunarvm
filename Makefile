@@ -1,6 +1,7 @@
 .PHONY: lunarbox
 lunarbox: fmain.c
-	@clang fmain.c -static -static-libgcc -ffreestanding -mno-sse -mno-sse2 -pie -Wno-unused-command-line-argument -Wno-return-type -o lunarbox
+	@clang fmain.c -static -static-libgcc -ffreestanding -mno-sse -mno-sse2 -pie -Wno-unused-command-line-argument -Wno-return-type -o lunarbox.exe
+	pwd
 fmain.c: main.c
 	@clang-format main.c > fmain.c
 main.c:
