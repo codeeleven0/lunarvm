@@ -18,14 +18,11 @@ jobs:
         run: |
           make
           pwd
+          dir
       - name: List Files
         run: |
           pwd
           dir
-          cd ..
-          dir
-          pwd
-          tree 
 
       - name: Create release
         id: create_release
@@ -45,6 +42,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: D:\lunarbox.exe
+          asset_path: D:\a\lunarvm\lunarvm\lunarbox.exe
           asset_name: lunarvm.exe
           asset_content_type: application/octet-stream
