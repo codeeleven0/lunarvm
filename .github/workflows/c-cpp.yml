@@ -23,7 +23,7 @@ jobs:
           draft: false
           prerelease: false
           release_name: v1.0a
-          tag_name: ${{ github.ref }}
+          tag_name: v1.0a
           body_path: README.md
         env:
           GITHUB_TOKEN: ${{ github.token }}
