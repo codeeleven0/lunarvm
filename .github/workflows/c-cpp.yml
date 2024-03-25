@@ -23,7 +23,7 @@ jobs:
         with:
           draft: false
           prerelease: false
-          release_name: ${{ steps.calculate_version.outputs.version }}
+          release_name: v${{ steps.calculate_version.outputs.version }}
           tag_name: v${{ steps.calculate_version.outputs.version }}
           body_path: README.md
         env:
