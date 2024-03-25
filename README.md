@@ -24,8 +24,8 @@ If you want to create a release for Windows you need to follow these simple step
 - Wait... :)
 
 # Arguments
-`FILENAME` Must be argv[1]<br>
-`-v` Be Verbose - must be at argv[2]<br>
+`FILENAME` Must be `argv[1]`<br>
+`-v` Be Verbose - must be `argv[2]`<br>
 
 # Instruction Set
 ```
