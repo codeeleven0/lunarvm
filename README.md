@@ -33,5 +33,4 @@ div r1 val
 ```
 hlt
 ```
-<br>
 Halt.
