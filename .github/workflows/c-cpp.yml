@@ -11,19 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: make
-        run: make
-      - name: version
-        id: version
-        run: echo "::set-output name=version::v1.0a"
+      - name: Calculate version
+        id: calculate_version
+        run: |
+          current_tag=${{ github.ref }}
+          version=$(echo "$current_tag + 0.1" | bc)
+          echo "::set-output name=version::$version"
       - name: release
         uses: actions/create-release@v1
         id: create_release
         with:
           draft: false
           prerelease: false
-          release_name: v1.0a
-          tag_name: v1.0a
+          release_name: ${{ steps.calculate_version.outputs.version }}
+          tag_name: v${{ steps.calculate_version.outputs.version }}
           body_path: README.md
         env:
           GITHUB_TOKEN: ${{ github.token }}
