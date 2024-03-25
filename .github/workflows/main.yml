@@ -1,0 +1,64 @@
+name: Compile - Windows (test)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Clang
+        run: |
+          choco install llvm --version=13.0.0
+
+      - name: Add LLVM bin directory to PATH
+        run: |
+          $clangPath = (Get-Command clang).Path
+          $env:Path += ";$clangPath"
+
+      - name: Install Make
+        run: |
+          choco install make
+
+      - name: Install Clang-Format
+        run: |
+          choco install clang-format --version=13.0.0
+
+      - name: Verify installations
+        run: |
+          clang --version
+          make --version
+          clang-format --version
+
+      - name: Build project
+        run: |
+          make
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v0.1a-${{ github.run_number }}
+          release_name: Release v0.1a-${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Upload artifact
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: path/to/your/artifact
+          asset_name: lunarvm
+          asset_content_type: application/octet-stream
