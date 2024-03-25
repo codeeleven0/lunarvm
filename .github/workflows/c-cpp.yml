@@ -15,23 +15,15 @@ jobs:
       - uses: actions/checkout@v4
       - name: Calculate version
         id: calculate_version
-        run: |
-          current_tag=${{ github.ref }}
-          # Check if the current tag is not zero before incrementing
-          if [ "$current_tag" != "0" ]; then
-            version=$(echo "$current_tag + 0.1" | bc)
-          else
-            version="0.1"
-          fi
-          echo "::set-output name=version::$version"
+        run: echo "::set-output name=version::$(date +%s)"
       - name: release
         uses: actions/create-release@v1
         id: create_release
         with:
           draft: false
           prerelease: false
-          release_name: v${{ steps.calculate_version.outputs.version }}
-          tag_name: v${{ steps.calculate_version.outputs.version }}
+          release_name: v0.1a-${{ steps.calculate_version.outputs.version }}
+          tag_name: v0.1a-${{ steps.calculate_version.outputs.version }}
           body_path: README.md
         env:
           GITHUB_TOKEN: ${{ github.token }}
