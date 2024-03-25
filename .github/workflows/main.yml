@@ -14,37 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Clang
-        run: |
-          choco install llvm --version=13.0.0 --force
-
-      - name: Add LLVM bin directory to PATH
-        run: |
-          $clangPath = (Get-Command clang).Path
-          $env:Path += ";$clangPath"
-
-      - name: Install Make
-        run: |
-          choco install make --force
-
-      - name: Verify installations
-        run: |
-          clang --version
-          make --version
-
-      - name: Download Clang-Format
-        run: |
-          Invoke-WebRequest -Uri "https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.0/LLVM-13.0.0-win64.exe" -OutFile "clang-format-installer.exe"
-          Start-Process -FilePath "clang-format-installer.exe" -ArgumentList "/S" -Wait
-
-      - name: Verify Clang-Format installation
-        run: |
-          clang-format --version
-
       - name: Build project
         run: |
           make
-          copy lunarbox.exe D:\lunarbox.exe
+          pwd
       - name: List Files
         run: |
           pwd
