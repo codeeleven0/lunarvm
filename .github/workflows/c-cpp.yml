@@ -2,9 +2,11 @@ name: Compile
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -15,7 +17,12 @@ jobs:
         id: calculate_version
         run: |
           current_tag=${{ github.ref }}
-          version=$(echo "$current_tag + 0.1" | bc)
+          # Check if the current tag is not zero before incrementing
+          if [ "$current_tag" != "0" ]; then
+            version=$(echo "$current_tag + 0.1" | bc)
+          else
+            version="0.1"
+          fi
           echo "::set-output name=version::$version"
       - name: release
         uses: actions/create-release@v1
