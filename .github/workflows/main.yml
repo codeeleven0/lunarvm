@@ -46,7 +46,12 @@ jobs:
           make
       - name: List Files
         run: |
-          dir 
+          pwd
+          dir
+          cd ..
+          dir
+          pwd
+          tree 
 
       - name: Create release
         id: create_release
