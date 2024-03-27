@@ -5,6 +5,7 @@
 void * pc = (void *)0x1;
 int convpc(void * pc){ return (int)(long)pc; }
 int registers[16] = {0x0};
+int reserved = 0;
 void readLine(FILE *fp, char to[512]){
     for(int i = 0; i < 512; i++){ to[i] = 0; }
     char x;
@@ -18,10 +19,20 @@ void readLine(FILE *fp, char to[512]){
     to[i] = '\0';
 }
 void setreg(int x, int y) { 
-    registers[x] = y; 
+    if (x != 16)
+        registers[x] = y;
+    else if(x == 16)
+        reserved = y;
+    else
+        return;
 }
 int readreg(int x){ 
-    return registers[x]; 
+    if (x != 16)
+        return registers[x];
+    else if(x == 16)
+        return reserved;
+    else
+        return 0;
 }
 int parseargs(int opcode, int args[3]){
     if(opcode == 0){ // SET r1 val

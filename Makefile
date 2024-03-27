@@ -10,3 +10,11 @@ run: lunarbox.exe main.S
 	@./lunarbox.exe main.S
 verbose: lunarbox.exe main.S
 	@./lunarbox.exe main.S -v
+lunambly: lunarbox.exe
+	@cd lunambly && make
+	@cd lunambly && ./lunambly > out.S
+	@./lunarbox.exe lunambly/out.S 
+lunambly-verbose: lunarbox.exe
+	@cd lunambly && make
+	@cd lunambly && ./lunambly > out.S
+	@./lunarbox.exe lunambly/out.S -v
