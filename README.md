@@ -4,7 +4,6 @@ LunarVM uses an assembly-like syntax.<br>
 If you want to build a compiler you need to follow these simple steps:
 - Create code (Make sure it's compilable with the `-static` flag, `staticx` is not allowed.)
 - Test code (I don't want to hassle with segfaults.)
-- Run through `clang-format` (`main.c -> fmain.c`, see the difference.)
 - Open an issue with the code
 - Wait... :)
 
