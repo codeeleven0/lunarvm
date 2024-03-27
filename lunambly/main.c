@@ -1,4 +1,6 @@
 #include <lunarstd.h>
-void main(){
+int main(){
     lunar_printf("Hello!");
+    lunar_req_dump();
+    return 0; // make is quiet now
 }

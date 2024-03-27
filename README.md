@@ -49,9 +49,21 @@ div r1 val
 ```
 `r1` = `r1` / `val`<br>
 ```
-hlt
+dump r1
 ```
-Halts.
+Dumps `r1`.<br>
+```
+fdump
+```
+Dump state.<br>
+```
+mw sec r1
+```
+`mem[sec] = read(r1)`.<br>
+```
+mr sec r1
+```
+`r1 = mem[sec]`.<br>
 
 # Lunambly? What's that?
 C library to produce LunarVM's `.S` files.

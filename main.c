@@ -2,11 +2,25 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
-void * pc = (void *)0x1;
+void * pc = (void *)0;
 int convpc(void * pc){ return (int)(long)pc; }
 int registers[16] = {0x0};
 int reserved = 0;
+int * mem;
+int * allocmem(){ 
+    int * arr;
+    arr = calloc(512, sizeof(int));
+    return arr;
+}
+void dump(){
+    printf("Data Register\n");
+    printf("\td%0d (x%0d) = %d\n",0,16,reserved);
+    printf("Registers\n");
+    for (int i = 0; i < (sizeof(registers)/sizeof(int)); i++)
+        printf("\tx%0d = %d\n",i,registers[i]);
+}
 void readLine(FILE *fp, char to[512]){
+    //TODO: Implement line for 'jmp'. Help?
     for(int i = 0; i < 512; i++){ to[i] = 0; }
     char x;
     x = fgetc(fp);
@@ -17,6 +31,17 @@ void readLine(FILE *fp, char to[512]){
         i++;
     }
     to[i] = '\0';
+}
+char tmp[512];
+void readSpecifiedLine(FILE* fp, int spl){
+    for(int i = 0; i < 512; i++){ tmp[i] = 0; }
+    fseek(fp,0,SEEK_SET);
+    int i = 0;
+    while (i < spl){
+        readLine(fp,tmp);
+        printf("%s\n",tmp);
+        i++;
+    }
 }
 void setreg(int x, int y) { 
     if (x != 16)
@@ -63,11 +88,29 @@ int parseargs(int opcode, int args[3]){
         setreg(args[0],readreg(args[0])/args[1]);
         return 0;
     }
-    if(opcode == 7){ // HLT
-        for(;;);
+    if(opcode == 7){ // DUMP r1
+        printf("%d",readreg(args[0]));
+        return 0;
+    }
+    if(opcode == 8){ // FDUMP
+        dump();
+        return 0;
+    }
+    if(opcode == 9){ // MW sec r1
+        mem[args[0]] = readreg(args[1]);
+        return 0;
+    }
+    if(opcode == 10){ // MR sec r1
+        setreg(args[1],mem[args[0]]);
+        return 0;
     }
 }
 int main(int argc, char** argv){
+    mem = allocmem();
+    if(mem[0] != 0){
+        printf("Memory allocating failed!\n");
+        exit(1);
+    }
     if(!(argc > 1)){ printf("Error: %s\n","no input file."); return 1; }
     FILE *fp;
     if(!(fp = fopen(argv[1],"r"))){ printf("Error: %s\n","input file can not be opened."); return 1; }
@@ -76,16 +119,17 @@ int main(int argc, char** argv){
     }else{
         printf("LunarVM v1.0 - Starting emulation.");
     }
-    char y[512];   
-    readLine(fp,y);
-    char * x = y; 
-    char *opcodelist[8] = {"set","put","lpc","add","sub","mul","div","hlt"};
+    char * x; 
+    char buf[512];
+    readLine(fp,buf);
+    x = buf;
+    char *opcodelist[11] = {"set","put","lpc","add","sub","mul","div","dump","fdump","mw","mr"}; // 'hlt' caused a bug. Removed.
     int opcodelen = sizeof(opcodelist)/sizeof(char*);
     int opcode = 0;
     int i = 0;
     int args[3];
     for(int z = 0; z < sizeof(args)/sizeof(int); z++) args[z] = 0;
-    while (y[0] != '\0'){
+    while (buf[0] != '\0'){
         char * token = strtok(x," ");
         while (token != NULL){
             i++;
@@ -103,12 +147,13 @@ int main(int argc, char** argv){
         }
         i = 0;
         if(argc > 2 && (strcmp(argv[2],"-v") == 0)){
-            printf("\n%d: [%d, %d, %d] PC: %p/%d\n",opcode,args[0],args[1],args[2],pc,convpc(pc));
+            printf("\n%d: [%d, %d, %d] PC: %p/%d, %s\n",opcode,args[0],args[1],args[2],pc,convpc(pc),x);
         }
         parseargs(opcode,args);
         for(int z = 0; z < sizeof(args)/sizeof(int); z++) args[z] = 0;
-        readLine(fp,y);
-        char * x = y;
+        readLine(fp,buf);
+        char *x = buf;
         pc++;
     }
+    return 0;
 }

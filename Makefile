@@ -18,3 +18,8 @@ lunambly-verbose: lunarbox.exe
 	@cd lunambly && make
 	@cd lunambly && ./lunambly > out.S
 	@./lunarbox.exe lunambly/out.S -v
+commit:
+	@git add .
+	@git commit -m "Update! (automated commit script)"
+	@git pull
+	@git push
