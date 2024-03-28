@@ -28,4 +28,8 @@ mw 0 16
 set 16 65
 mr 0 16
 put 16
+set 16 13
+put 16
+set 16 10
+put 16
 fdump

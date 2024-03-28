@@ -14,4 +14,3 @@ set 3 10
 put 3
 set 3 13 
 put 3
-hlt

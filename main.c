@@ -2,8 +2,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
-void * pc = (void *)0;
-int convpc(void * pc){ return (int)(long)pc; }
+int pc = 0;
 int registers[16] = {0x0};
 int reserved = 0;
 int * mem;
@@ -13,7 +12,7 @@ int * allocmem(){
     return arr;
 }
 void dump(){
-    printf("Data Register\n");
+    printf("\nData Register\n");
     printf("\td%0d (x%0d) = %d\n",0,16,reserved);
     printf("Registers\n");
     for (int i = 0; i < (sizeof(registers)/sizeof(int)); i++)
@@ -31,17 +30,6 @@ void readLine(FILE *fp, char to[512]){
         i++;
     }
     to[i] = '\0';
-}
-char tmp[512];
-void readSpecifiedLine(FILE* fp, int spl){
-    for(int i = 0; i < 512; i++){ tmp[i] = 0; }
-    fseek(fp,0,SEEK_SET);
-    int i = 0;
-    while (i < spl){
-        readLine(fp,tmp);
-        printf("%s\n",tmp);
-        i++;
-    }
 }
 void setreg(int x, int y) { 
     if (x != 16)
@@ -69,7 +57,7 @@ int parseargs(int opcode, int args[3]){
         return 0;
     }
     if(opcode == 2){ // LPC r1
-        setreg(args[0],convpc(pc));
+        setreg(args[0],pc);
         return 0;
     }
     if(opcode == 3){ // ADD r1 val
@@ -119,10 +107,10 @@ int main(int argc, char** argv){
     }else{
         printf("LunarVM v1.0 - Starting emulation.");
     }
-    char * x; 
+    fseek(fp,0,0);
     char buf[512];
     readLine(fp,buf);
-    x = buf;
+    char *x = buf;
     char *opcodelist[11] = {"set","put","lpc","add","sub","mul","div","dump","fdump","mw","mr"}; // 'hlt' caused a bug. Removed.
     int opcodelen = sizeof(opcodelist)/sizeof(char*);
     int opcode = 0;
@@ -147,13 +135,13 @@ int main(int argc, char** argv){
         }
         i = 0;
         if(argc > 2 && (strcmp(argv[2],"-v") == 0)){
-            printf("\n%d: [%d, %d, %d] PC: %p/%d, %s\n",opcode,args[0],args[1],args[2],pc,convpc(pc),x);
+            printf("\n%d: [%d, %d, %d] PC: %d, %s\n",opcode,args[0],args[1],args[2],pc,x);
         }
         parseargs(opcode,args);
         for(int z = 0; z < sizeof(args)/sizeof(int); z++) args[z] = 0;
+        pc++;
         readLine(fp,buf);
         char *x = buf;
-        pc++;
     }
     return 0;
 }
