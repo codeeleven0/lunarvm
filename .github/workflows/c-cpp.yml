@@ -16,6 +16,9 @@ jobs:
       - name: Calculate version
         id: calculate_version
         run: echo "::set-output name=version::$(date +%s)"
+      - name: Build
+        id: buildit
+        run: make
       - name: release
         uses: actions/create-release@v1
         id: create_release
