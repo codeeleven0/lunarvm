@@ -2,6 +2,10 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
+/*
+* Copyright (C) 2024 - Mustafa E
+* This project is licenced under GNU GPLv3!
+*/
 int pc = 0;
 int registers[16] = {0x0};
 int reserved = 0;
@@ -46,6 +50,9 @@ int readreg(int x){
         return reserved;
     else
         return 0;
+}
+int gi(){
+    return getchar();
 }
 int parseargs(int opcode, int args[3]){
     if(opcode == 0){ // SET r1 val
@@ -92,6 +99,29 @@ int parseargs(int opcode, int args[3]){
         setreg(args[1],mem[args[0]]);
         return 0;
     }
+    if(opcode == 11){ // COPY r1 r2 / r1 is r2
+        setreg(args[0],readreg(args[1]));
+        return 0;
+    }
+    if(opcode == 12){ // ADDR r1 r2 / r1 + r2 = data
+        setreg(16,readreg(args[0]) + readreg(args[1]));
+        return 0;
+    }
+    if(opcode == 13){ // SUBR r1 r2 / r1 - r2 = data
+        setreg(16,readreg(args[0]) - readreg(args[1]));
+        return 0;
+    }
+    if(opcode == 14){ // DIVR r1 r2 / r1 / r2 = data
+        setreg(16,readreg(args[0]) / readreg(args[1]));
+        return 0;
+    }
+    if(opcode == 15){ // MULR r1 r2 / r1 * r2 = data
+        setreg(16,readreg(args[0]) * readreg(args[1]));
+        return 0;
+    }
+    if(opcode == 16){ // INP r1
+        setreg(args[0],gi());
+    }
 }
 int main(int argc, char** argv){
     mem = allocmem();
@@ -111,7 +141,7 @@ int main(int argc, char** argv){
     char buf[512];
     readLine(fp,buf);
     char *x = buf;
-    char *opcodelist[11] = {"set","put","lpc","add","sub","mul","div","dump","fdump","mw","mr"}; // 'hlt' caused a bug. Removed.
+    char *opcodelist[17] = {"set","put","lpc","add","sub","mul","div","dump","fdump","mw","mr","copy","addr","subr","divr","movr","inp"}; // 'hlt' caused a bug. Removed.
     int opcodelen = sizeof(opcodelist)/sizeof(char*);
     int opcode = 0;
     int i = 0;

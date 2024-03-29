@@ -1,4 +1,5 @@
 # LunarVM
+*This project is licenced under GPLv3*<br>
 A simple emulated CPU.<br>
 LunarVM uses an assembly-like syntax.<br>
 If you want to build a compiler you need to follow these simple steps:
@@ -64,6 +65,30 @@ mw sec r1
 mr sec r1
 ```
 `r1 = mem[sec]`.<br>
+```
+copy r1 r2
+```
+`r1 = r2`.<br>
+```
+addr r1 r2
+```
+`r1 + r2 = datareg`.<br>
+```
+subr r1 r2
+```
+`r1 - r2 = datareg`.<br>
+```
+divr r1 r2
+```
+`r1 / r2 = datareg`.<br>
+```
+mulr r1 r2
+```
+`r1 * r2 = datareg`.<br>
+```
+inp r1
+```
+`r1 = userinput` (needs to press enter).<br>
 
 # Lunambly? What's that?
 C library to produce LunarVM's `.S` files.
