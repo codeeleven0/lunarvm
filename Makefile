@@ -1,6 +1,6 @@
 .PHONY: lunarbox.exe
 lunarbox.exe: main.c
-	@gcc main.c -static -static-libgcc -ffreestanding -mno-sse -mno-sse2 -pie -Wno-unused-command-line-argument -Wno-return-type -o lunarbox.exe
+	@gcc main.c -static -static-libgcc -ffreestanding -pie -Wno-unused-command-line-argument -Wno-return-type -o lunarbox.exe
 	pwd
 main.c:
 	@ls main.c
